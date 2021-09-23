@@ -3,9 +3,13 @@ import * as express from "express";
 import {NextFunction, Request, Response} from 'express';
 import {errorHandler} from "./error-handler";
 import {asyncHandler} from "./async-handler";
+import {insertOperation, Sex} from "./operations";
+import {connectToDb} from "./db-connect";
+import {config} from "./config";
 
 
 export const createWebServer = () => {
+    const pool = connectToDb();
     const app = express();
 
     const port = 3000;
@@ -33,7 +37,9 @@ export const createWebServer = () => {
     });
 
     app.post('/person/create', asyncHandler(async (req: Request, res: Response) => {
-        console.log("req.body ", req.body);
+        console.log("req.body asdaddda", req.body);
+
+        await insertOperation(pool, req.body.userId, req.body.firstName, req.body.lastName, req.body.emailAddress, req.body.homeAddress, Sex.FEMALE, req.body.dateOfBirth);
 
         const response = {
             status: "ok",
@@ -66,6 +72,7 @@ export const createWebServer = () => {
         return new Promise<void>((resolve, reject) =>  {
             server.listen(port, () => {
                 console.log(`App listening at http://localhost:${port}`);
+                console.log("Config: ", config);
                 resolve();
             });
         });
