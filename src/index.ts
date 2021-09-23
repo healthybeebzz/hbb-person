@@ -1,5 +1,9 @@
-import {createWebServer} from "./create-web-server.ts";
+import {createWebServer} from "./create-web-server";
 
 const server = createWebServer();
 
-await server.start();
+const startServer = async () => {
+    await server.start()
+}
+
+startServer();
