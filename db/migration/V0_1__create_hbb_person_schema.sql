@@ -1,6 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS hbb_person;
 
-CREATE TYPE sex as ENUM('female', 'male');
+CREATE TYPE sex AS ENUM('female', 'male');
 
 CREATE TABLE IF NOT EXISTS hbb_person.patients (
     id BIGSERIAL not null primary key,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS hbb_person.patients (
     last_name VARCHAR not null,
     email_address VARCHAR not null,
     home_address VARCHAR not null,
-    type sex not null,
+    sex sex not null,
     date_of_birth DATE not null,
     created_at timestamp default now() not null
 );
