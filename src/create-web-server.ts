@@ -32,7 +32,7 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.post('/person/create', asyncHandler, (async (req: Request, res: Response) => {
+    app.post('/person/create', asyncHandler(async (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -43,7 +43,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.put('/person/:personId/edit', asyncHandler ( async (req: Request, res: Response) => {
+    app.put('/person/:personId/edit', asyncHandler( async (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
