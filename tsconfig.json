@@ -9,6 +9,7 @@
     "outDir": "build",
     "strict": true,
     "composite": false,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   }
 }

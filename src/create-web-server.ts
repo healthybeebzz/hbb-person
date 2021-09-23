@@ -1,5 +1,6 @@
 import * as http from 'http';
-import express from 'express';
+import * as express from "express";
+import {NextFunction, Request, Response} from 'express';
 import bodyParser from 'express';
 
 export const createWebServer = () => {
@@ -9,7 +10,7 @@ export const createWebServer = () => {
 
     app.use(bodyParser.json());
 
-    app.get('/person/:personId', (req, res) => {
+    app.get('/person/:personId', (req: Request, res: Response) => {
         const personId = req.params.personId;
 
         const response = {
@@ -21,7 +22,7 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.post('/person/create', (req, res) => {
+    app.post('/person/create', (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -32,7 +33,7 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.put('/person/:personId/edit', (req, res) => {
+    app.put('/person/:personId/edit', (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -43,7 +44,7 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.delete('/person/:personId/delete'), (req,res) => {
+    app.delete('/person/:personId/delete'), (req: Request, res: Response) => {
 
         res.send(`User was deleted from the database`)
     }
@@ -51,7 +52,7 @@ export const createWebServer = () => {
     const server = http.createServer(app);
 
     const start = () => {
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) =>  {
             server.listen(port, () => {
                 console.log(`App listening at http://localhost:${port}`);
                 resolve();
@@ -60,7 +61,7 @@ export const createWebServer = () => {
     }
 
     const stop = () => {
-        return new Promise((resolve, reject) => {
+        return  new Promise<void>((resolve, reject) =>  {
             server.close(err => {
                 if (err) return reject();
 
