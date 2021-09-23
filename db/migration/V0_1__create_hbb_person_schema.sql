@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS hbb_person.patients (
     email_address VARCHAR not null,
     home_address VARCHAR not null,
     sex sex not null,
-    date_of_birth DATE not null,
+    date_of_birth VARCHAR not null,
     created_at timestamp default now() not null
 );
 

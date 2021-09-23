@@ -3,7 +3,7 @@ import * as express from "express";
 import {NextFunction, Request, Response} from 'express';
 import {errorHandler} from "./error-handler";
 import {asyncHandler} from "./async-handler";
-import {insertOperation, Sex} from "./operations";
+import {insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
 import {config} from "./config";
 
@@ -37,9 +37,7 @@ export const createWebServer = () => {
     });
 
     app.post('/person/create', asyncHandler(async (req: Request, res: Response) => {
-        console.log("req.body asdaddda", req.body);
-
-        await insertOperation(pool, req.body.userId, req.body.firstName, req.body.lastName, req.body.emailAddress, req.body.homeAddress, Sex.FEMALE, req.body.dateOfBirth);
+        await insertOperation(pool, {userId: req.body.userId, firstName: req.body.firstName, lastName: req.body.lastName, emailAddress: req.body.emailAddress, homeAddress: req.body.homeAddress, sex: req.body.sex, dateOfBirth: req.body.dateOfBirth});
 
         const response = {
             status: "ok",
