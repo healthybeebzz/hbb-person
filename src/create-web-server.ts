@@ -1,6 +1,6 @@
 import * as http from 'http';
 import * as express from "express";
-import {Request, Response} from 'express';
+import {NextFunction, Request, Response} from 'express';
 import {errorHandler} from "./error-handler";
 import {asyncHandler} from "./async-handler";
 
@@ -12,7 +12,13 @@ export const createWebServer = () => {
 
     app.use(express.json());
 
-    app.get('/person/:personId', asyncHandler, (async (req: Request, res: Response) => {
+    // Logs the request payload and request params if applicable
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        console.log(`Request on path ${req.path}, with payload:`, req.body);
+        next();
+    });
+
+    app.get('/person/:personId', errorHandler, (req: Request, res: Response) => {
         const personId = req.params.personId;
 
         const response = {
@@ -22,7 +28,7 @@ export const createWebServer = () => {
         };
 
         res.send(response);
-    }), errorHandler);
+    });
 
     app.post('/person/create', asyncHandler, (async (req: Request, res: Response) => {
         console.log("req.body ", req.body);
