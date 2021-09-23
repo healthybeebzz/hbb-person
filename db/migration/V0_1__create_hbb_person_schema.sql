@@ -1,14 +1,17 @@
-CREATE SCHEMA IF NOT EXISTS hbb_wallet;
+CREATE SCHEMA IF NOT EXISTS hbb_person;
 
-CREATE TYPE transaction_type as ENUM('credit', 'debit');
+CREATE TYPE sex as ENUM('female', 'male');
 
-CREATE TABLE IF NOT EXISTS hbb_wallet.transactions (
+CREATE TABLE IF NOT EXISTS hbb_person.patients (
     id BIGSERIAL not null primary key,
     user_id INT not null,
-    type transaction_type not null,
-    amount INT not null,
-    refrence_id TEXT not null,
+    first_name VARCHAR not null,
+    last_name VARCHAR not null,
+    email_address VARCHAR not null,
+    home_address VARCHAR not null,
+    TYPE sex not null,
+    date_of_birth DATE not null,
     created_at timestamp default now() not null
 );
 
-CREATE INDEX IF NOT EXISTS transactions_user_id_index ON hbb_wallet.transactions(user_id);
+CREATE INDEX IF NOT EXISTS patients_user_id_index ON hbb_person.patients(user_id);

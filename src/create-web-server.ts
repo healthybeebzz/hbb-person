@@ -19,6 +19,8 @@ export const createWebServer = () => {
     });
 
     app.get('/person/:personId', errorHandler, (req: Request, res: Response) => {
+        if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
+
         const personId = req.params.personId;
 
         const response = {

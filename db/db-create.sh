@@ -1,1 +1,1 @@
-docker build -t hbb-wallet-db .
+docker build -t hbb-person-db .

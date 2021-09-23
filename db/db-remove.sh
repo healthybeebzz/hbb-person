@@ -1,1 +1,1 @@
-docker rm hbb-wallet-db
+docker rm hbb-person-db
