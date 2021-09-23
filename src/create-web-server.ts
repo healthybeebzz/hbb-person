@@ -1,6 +1,8 @@
 import * as http from 'http';
 import * as express from "express";
 import {Request, Response} from 'express';
+import {errorHandler} from "./error-handler";
+import {asyncHandler} from "./async-handler";
 
 
 export const createWebServer = () => {
@@ -10,7 +12,7 @@ export const createWebServer = () => {
 
     app.use(express.json());
 
-    app.get('/person/:personId', (req: Request, res: Response) => {
+    app.get('/person/:personId', asyncHandler, (async (req: Request, res: Response) => {
         const personId = req.params.personId;
 
         const response = {
@@ -20,9 +22,9 @@ export const createWebServer = () => {
         };
 
         res.send(response);
-    });
+    }), errorHandler);
 
-    app.post('/person/create', (req: Request, res: Response) => {
+    app.post('/person/create', asyncHandler, (async (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -31,9 +33,9 @@ export const createWebServer = () => {
         }
 
         res.send(response);
-    });
+    }), errorHandler);
 
-    app.put('/person/:personId/edit', (req: Request, res: Response) => {
+    app.put('/person/:personId/edit', asyncHandler ( async (req: Request, res: Response) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -42,12 +44,13 @@ export const createWebServer = () => {
         }
 
         res.send(response);
-    });
+    }), errorHandler);
 
-    app.delete('/person/:personId/delete'), (req: Request, res: Response) => {
+    app.delete('/person/:personId/delete', asyncHandler (async (req: Request, res: Response) => {
 
-        res.send(`User was deleted from the database`)
-    }
+        res.send(`User was deleted from the database`);
+
+    }), errorHandler);
 
     const server = http.createServer(app);
 
