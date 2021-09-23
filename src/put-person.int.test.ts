@@ -1,11 +1,11 @@
 import {expect} from 'chai';
 import request from 'supertest';
-import {createWebServer} from "./create-web-server.ts";
+import {createWebServer} from "./create-web-server";
 
 
 describe('/person/edit', () => {
-    let port;
-    let server;
+    let port: number;
+    let server: { stop: () => Promise<unknown>, port: number, start: () => Promise<unknown> };
 
     before(async () => {
         server = createWebServer();
