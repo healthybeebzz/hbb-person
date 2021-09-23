@@ -3,11 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createWebServer = void 0;
 const http = require("http");
 const express = require("express");
-const express_1 = require("express");
 const createWebServer = () => {
     const app = express();
     const port = 3000;
-    app.use(express_1.default.json());
+    app.use(express.json());
     app.get('/person/:personId', (req, res) => {
         const personId = req.params.personId;
         const response = {

@@ -1,14 +1,14 @@
 import * as http from 'http';
 import * as express from "express";
-import {NextFunction, Request, Response} from 'express';
-import bodyParser from 'express';
+import {Request, Response} from 'express';
+
 
 export const createWebServer = () => {
     const app = express();
 
     const port = 3000;
 
-    app.use(bodyParser.json());
+    app.use(express.json());
 
     app.get('/person/:personId', (req: Request, res: Response) => {
         const personId = req.params.personId;
