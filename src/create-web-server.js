@@ -32,7 +32,7 @@ export const createWebServer = () => {
         res.send(response);
     });
 
-    app.put('/person/edit', (req, res) => {
+    app.put('/person/:personId/edit', (req, res) => {
         console.log("req.body ", req.body);
 
         const response = {
@@ -42,6 +42,11 @@ export const createWebServer = () => {
 
         res.send(response);
     });
+
+    app.delete('/person/:personId/delete'), (req,res) => {
+
+        res.send(`User was deleted from the database`)
+    }
 
     const server = http.createServer(app);
 
