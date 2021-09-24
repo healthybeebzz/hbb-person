@@ -22,13 +22,13 @@ export const createWebServer = () => {
         next();
     });
 
-    app.get('/person/:personId', errorHandler, (req: Request, res: Response) => {
+    app.get('/person/:userId', errorHandler, (req: Request, res: Response) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
 
-        const personId = req.params.personId;
+        const userId = req.params.userId;
 
         const response = {
-            personId,
+            userId,
             firstName: "Maria",
             lastName: "Mihaila"
         };
