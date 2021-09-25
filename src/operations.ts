@@ -20,7 +20,7 @@ export type Operation = {
 
 
 /**
-* Fetches transcations from the table and maps them to DTO (data transfer objects).
+* Fetches users from the table and maps them to DTO (data transfer objects).
 * @param pool
 * @param userId
 */
