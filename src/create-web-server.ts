@@ -6,6 +6,7 @@ import {asyncHandler} from "./async-handler";
 import {insertOperation} from "./operations";
 import {connectToDb} from "./db-connect";
 import {fetchPatient} from "./operations";
+import {payloadValidationMiddleware} from "./payload-validation-middleware";
 import {config} from "./config";
 
 
@@ -36,7 +37,7 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.post('/person/create', asyncHandler(async (req: Request, res: Response) => {
+    app.post('/person/create', payloadValidationMiddleware, asyncHandler(async (req: Request, res: Response) => {
         await insertOperation(pool, {userId: req.body.userId, firstName: req.body.firstName, lastName: req.body.lastName, emailAddress: req.body.emailAddress, homeAddress: req.body.homeAddress, sex: req.body.sex, dateOfBirth: req.body.dateOfBirth});
 
         const response = {
