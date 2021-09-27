@@ -26,7 +26,7 @@ export type Operation = {
 */
 export const fetchPatient = async (pool: Pool, userId: number) => {
     const {rows} = await pool.query(`SELECT * FROM hbb_person.patients WHERE user_id=${userId}`);
-    
+
     if (rows[0] === undefined) throw new Error(`The patient with the id: ${userId} does not exist.`);
 
     return {
