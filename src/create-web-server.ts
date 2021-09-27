@@ -77,6 +77,8 @@ export const createWebServer = () => {
     }), errorHandler);
 
     app.delete('/person/:userId/delete', asyncHandler (async (req: Request, res: Response) => {
+        await pool.query(`
+            DELETE FROM hbb_person.patients WHERE user_id=${req.params.userId}`);
 
         res.send(`The user with the id ${req.params.userId} was deleted from the database.`);
 
