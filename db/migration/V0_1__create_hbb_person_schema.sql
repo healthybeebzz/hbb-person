@@ -4,7 +4,7 @@ CREATE TYPE sex AS ENUM('female', 'male');
 
 CREATE TABLE IF NOT EXISTS hbb_person.patients (
     id BIGSERIAL not null primary key,
-    user_id INT not null,
+    user_id SERIAL not null,
     first_name VARCHAR not null,
     last_name VARCHAR not null,
     email_address VARCHAR not null,

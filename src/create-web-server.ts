@@ -38,7 +38,7 @@ export const createWebServer = () => {
     }), errorHandler);
 
     app.post('/person/create', payloadValidationMiddleware, asyncHandler(async (req: Request, res: Response) => {
-        await insertOperation(pool, {userId: req.body.userId, firstName: req.body.firstName, lastName: req.body.lastName, emailAddress: req.body.emailAddress, homeAddress: req.body.homeAddress, sex: req.body.sex, dateOfBirth: req.body.dateOfBirth});
+        await insertOperation(pool, {firstName: req.body.firstName, lastName: req.body.lastName, emailAddress: req.body.emailAddress, homeAddress: req.body.homeAddress, sex: req.body.sex, dateOfBirth: req.body.dateOfBirth});
 
         const response = {
             status: "ok",
