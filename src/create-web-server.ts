@@ -23,7 +23,7 @@ export const createWebServer = () => {
         next();
     });
 
-    app.get('/person/:userId', errorHandler, (async (req: Request, res: Response) => {
+    app.get('/person/:userId', asyncHandler (async (req: Request, res: Response) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
 
         const patient = await fetchPatient(pool, Number(req.params.userId));
@@ -34,7 +34,7 @@ export const createWebServer = () => {
         };
 
         res.send(response);
-    }));
+    }), errorHandler);
 
     app.post('/person/create', asyncHandler(async (req: Request, res: Response) => {
         await insertOperation(pool, {userId: req.body.userId, firstName: req.body.firstName, lastName: req.body.lastName, emailAddress: req.body.emailAddress, homeAddress: req.body.homeAddress, sex: req.body.sex, dateOfBirth: req.body.dateOfBirth});
