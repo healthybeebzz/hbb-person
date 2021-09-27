@@ -25,25 +25,17 @@ export type Operation = {
 * @param userId
 */
 export const fetchPatient = async (pool: Pool, userId: number) => {
-    const queryResult = await pool.query(`SELECT * FROM hbb_person.patients WHERE user_id=${userId}`);
-    const rows = queryResult.rows;
+    const {rows} = await pool.query(`SELECT * FROM hbb_person.patients WHERE user_id=${userId}`);
 
-    const resultsArray: Array<Operation> = [];
-    for (let i = 0; i < rows.length; i++) {
-        const obj = {
-            id: rows[i].id,
-            userId: rows[i].user_id,
-            firstName: rows[i].first_name,
-            lastName: rows[i].last_name,
-            emailAddress: rows[i].email_address,
-            homeAddress: rows[i].home_address,
-            sex: rows[i].sex,
-            dateOfBirth: rows[i].date_of_birth,
-            createdAt: rows[i].created_at
-        }
-
-        resultsArray.push(obj);
+    return {
+        id: rows[0].id,
+        userId: rows[0].user_id,
+        firstName: rows[0].first_name,
+        lastName: rows[0].last_name,
+        emailAddress: rows[0].email_address,
+        homeAddress: rows[0].home_address,
+        sex: rows[0].sex,
+        dateOfBirth: rows[0].date_of_birth,
+        createdAt: rows[0].created_at
     }
-
-    return resultsArray;
 }
