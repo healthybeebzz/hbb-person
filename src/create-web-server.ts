@@ -49,7 +49,6 @@ export const createWebServer = () => {
 
     app.put('/person/:userId/edit', asyncHandler( async (req: Request, res: Response) => {
         const patient = await fetchPatient(pool, Number(req.params.userId));
-        console.log("patient ", patient);
 
         if (req.body.firstName) patient.firstName = req.body.firstName;
         if (req.body.lastName) patient.lastName = req.body.lastName;
