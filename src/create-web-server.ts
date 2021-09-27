@@ -25,6 +25,7 @@ export const createWebServer = () => {
 
     app.get('/person/:userId', errorHandler, (async (req: Request, res: Response) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
+
         const patient = await fetchPatient(pool, Number(req.params.userId));
 
         const response = {
@@ -46,20 +47,39 @@ export const createWebServer = () => {
         res.send(response);
     }), errorHandler);
 
-    app.put('/person/:personId/edit', asyncHandler( async (req: Request, res: Response) => {
-        console.log("req.body ", req.body);
+    app.put('/person/:userId/edit', asyncHandler( async (req: Request, res: Response) => {
+        const patient = await fetchPatient(pool, Number(req.params.userId));
+        console.log("patient ", patient);
+
+        if (req.body.firstName) patient.firstName = req.body.firstName;
+        if (req.body.lastName) patient.lastName = req.body.lastName;
+        if (req.body.emailAddress) patient.emailAddress = req.body.emailAddress;
+        if (req.body.homeAddress) patient.homeAddress = req.body.homeAddress;
+        if (req.body.sex) patient.sex = req.body.sex;
+        if (req.body.dateOfBirth) patient.dateOfBirth = req.body.dateOfBirth;
+
+        await pool.query(`
+            UPDATE hbb_person.patients 
+                SET first_name = '${patient.firstName}',
+                last_name = '${patient.lastName}',
+                email_address = '${patient.emailAddress}',
+                home_address = '${patient.homeAddress}',
+                sex = '${patient.sex}',
+                date_of_birth = '${patient.dateOfBirth}'
+            WHERE hbb_person.patients.user_id=${req.params.userId}`);
 
         const response = {
-            firstName: "Razvan",
-            lastName: "Pavelescu"
+            userId: req.params.userId,
+            patientDetails: patient,
+            message: `The user ${req.body.firstName} ${req.body.lastName} with the id ${req.params.userId} was updated.`
         }
 
         res.send(response);
     }), errorHandler);
 
-    app.delete('/person/:personId/delete', asyncHandler (async (req: Request, res: Response) => {
+    app.delete('/person/:userId/delete', asyncHandler (async (req: Request, res: Response) => {
 
-        res.send(`User was deleted from the database`);
+        res.send(`The user with the id ${req.params.userId} was deleted from the database.`);
 
     }), errorHandler);
 
