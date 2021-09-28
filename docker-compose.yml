@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  hbb-person-db:
+    container_name: hbb-person-db
+    build:
+      context: ./db
+    ports:
+      - "5433:5432"
+    networks:
+      - lndnet
+
+  hbb-person:
+    container_name: hbb-person
+    build:
+      context: ./
+    environment:
+      - DB_HOST=hbb-person-db
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_DATABASE=postgres
+      - DB_PORT=5433
+
+    ports:
+      - "3001:3000"
+    networks:
+      - lndnet
+    depends_on:
+      - "hbb-person-db"
+
+networks:
+  lndnet:
+    driver: bridge
