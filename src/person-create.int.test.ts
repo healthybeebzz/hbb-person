@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import request from 'supertest';
+import {default as axios} from 'axios';
 import {createWebServer} from "./create-web-server";
 
 
@@ -20,15 +20,18 @@ describe('/person/create', () => {
 
     it('given non-existing person > when calling post /person/create > should return valid response', async () => {
         const payload = {
-            requestId: 1,
-            username: 'person123',
-            externalToken: 1
+            firstName: 'maria',
+            lastName: 'palaria',
+            emailAddress: 'maria.palaria@maria.com',
+            homeAddress: 'str sfintilor',
+            sex: 'female',
+            dateOfBirth: '17.08.1995'
         };
 
-        const response = await request(`http://localhost:${port}`).post('/person/create').send(payload);
+        const response = await axios.post(`http://localhost:${port}/person/create`, payload);
 
         expect(response.status).to.be.equal(200);
-        expect(response.body).to.be.deep.equal({
+        expect(response.data).to.be.deep.equal({
             status: "ok",
             message: "New person created."
         });
