@@ -1,4 +1,6 @@
 import {Pool} from 'pg';
+import {PersonDetails} from "./person-types";
+
 
 export const insertOperation = async (pool: Pool, operation: Operation) => {
     const {firstName, lastName, emailAddress, homeAddress, sex, dateOfBirth} = operation;
@@ -23,7 +25,7 @@ export type Operation = {
 * @param pool
 * @param userId
 */
-export const fetchPatient = async (pool: Pool, userId: number) => {
+export const fetchPatient = async (pool: Pool, userId: number): Promise<PersonDetails> => {
     const {rows} = await pool.query(`SELECT * FROM hbb_person.patients WHERE user_id=${userId}`);
 
     if (rows[0] === undefined) throw new Error(`The patient with the id: ${userId} does not exist.`);
@@ -36,7 +38,6 @@ export const fetchPatient = async (pool: Pool, userId: number) => {
         emailAddress: rows[0].email_address,
         homeAddress: rows[0].home_address,
         sex: rows[0].sex,
-        dateOfBirth: rows[0].date_of_birth,
-        createdAt: rows[0].created_at
+        dateOfBirth: rows[0].date_of_birth
     }
 }
