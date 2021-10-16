@@ -9,6 +9,7 @@ import {connectToDb} from "./db-connect";
 import {fetchPatient} from "./operations";
 import {payloadValidationMiddleware} from "./payload-validation-middleware";
 import {config} from "./config";
+import {convertFromDTOToPerson} from "./helpers";
 
 
 export const createWebServer = () => {
@@ -28,12 +29,9 @@ export const createWebServer = () => {
     app.get('/person/:userId', asyncHandler (async (req: Request, res: Response) => {
         if (!req.params.userId) throw new Error('The `userId` parameter is not present.');
 
-        const patient = await fetchPatient(pool, Number(req.params.userId));
+        const patientDTO = await fetchPatient(pool, Number(req.params.userId));
 
-        const response = {
-            userId: req.params.userId,
-            patientDetails: patient,
-        };
+        const response = convertFromDTOToPerson(patientDTO);
 
         res.send(response);
     }), errorHandler);
