@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import * as http from 'http';
 import * as express from "express";
 import {NextFunction, Request, Response} from 'express';
